@@ -25,29 +25,29 @@ Status test_my_string_init_default(char* buffer, int length);
 
 Status test_my_string_destroy(char* buffer, int length);
 
-Status test_my_string_compare_return_negetive(char* buffer, int length);
+Status test_my_string_extraction(char* buffer, int length);
 
-Status test_my_string_compare_return_positive(char* buffer, int length);
+Status test_my_string_insertion(char* buffer, int length);
 
-Status test_my_string_compare_return_zero(char* buffer, int length);
+Status test_my_string_get_size(char* buffer, int length);
 
-Status test_my_string_concat_RETURN_SUCCESS(char* buffer, int length);
+Status test_my_string_get_capacity(char* buffer, int length);
 
-Status test_my_string_concat_RETURN_FAILURE(char* buffer, int length);
+Status test_my_string_push_back(char* buffer, int length);
 
-Status test_my_string_empty_TRUE(char* buffer, int length);
+Status test_my_string_pop_back(char* buffer, int length);
 
-Status test_my_string_empty_FALSE(char* buffer, int length);
+Status test_my_string_at(char* buffer, int length);
 
-Status test_my_string_at_return_value(char* buffer, int length);
+Status test_my_string_c_str(char* buffer, int length);
 
-Status test_my_string_at_return_NULL(char* buffer, int length);
+Status test_my_string_concat(char* buffer, int length);
 
-Status test_my_string_c_str_Terminating_SUCCESS(char* buffer, int length);
+Status test_my_string_empty(char* buffer, int length);
 
-Status test_my_string_c_str_Terminating_FAILURE(char* buffer, int length);
+Status test_my_string_print(char* buffer, int length);
 
-Status test_my_string_get_size_return_Garbage(char* buffer, int length);
+Status test_my_string_init_default_NULL(char* buffer, int length);
 
 
 #endif

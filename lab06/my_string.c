@@ -106,14 +106,10 @@ Status my_string_extraction(MY_STRING hMy_string, FILE* fp)
 
 
 
-int my_string_get_size(MY_STRING hMy_string)
+int my_string_get_size(MY_STRING* hMy_string)
 {
 
 	My_string* pMy_string = (My_string*)hMy_string;
-	if(pMy_string == NULL)
-	{
-		return -1;
-	}
 	return pMy_string->size;
 
 }
@@ -273,29 +269,8 @@ Boolean my_string_empty(MY_STRING hMy_string)
 	return FALSE;
 }
 
-int my_string_compare(MY_STRING hStringOne, MY_STRING hStringTwo)
-{
-	My_string* pOne = (My_string*)hStringOne;
-	My_string* pTwo = (My_string*)hStringTwo;
-	
-	if(pOne == NULL || pTwo == NULL)
-	{
-		return -1337;
-	}
 
-	int one = my_string_get_size(pOne);
-	int two = my_string_get_size(pTwo);
 
-	if(one > two)
-	{
-		return 1;
-	}
-	else if(one < two)
-	{
-		return -1;
-	}
-	return 0;
-}
 
 void my_string_destroy(MY_STRING* hpMy_string)
 {
@@ -304,13 +279,79 @@ void my_string_destroy(MY_STRING* hpMy_string)
 	free(pMy_string->data);
 	free(pMy_string);
 	hpMy_string = NULL;
-	//*hpMy_string = NULL;
 
 }
 
 
 
+Status my_string_assignment(MY_STRING hLeft, MY_STRING hRight)
+{
+	int i;
+	My_string* pLeft = (My_string*)hLeft;
+	My_string* pRight = (My_string*)hRight;
 
+	if(pLeft->capacity <= pRight->capacity)
+	{
+		//resize
+		char* temp = (char*)malloc(sizeof(char)* pRight->capacity);
+		if(temp == NULL)
+		{
+			return FAILURE;
+		}
+		//copy data into new arra
+		for(i = 0;i<pRight->size;i++)
+		{
+		temp[i] = pRight->data[i];
+		}
+		pLeft->size = pRight->size;
+		pLeft->capacity = pRight->capacity;
+		free(pLeft->data);
+		pLeft->data = temp;
+	}
+	else
+	{
+	for(i = 0;i<pRight->size;i++)
+	{
+	pLeft->data[i] = pRight->data[i];
+	}
 
+	pLeft->size = pRight->size;
+	pLeft->capacity = pRight->capacity;
 
+	}
+	return SUCCESS;
+}
+
+MY_STRING my_string_init_copy(MY_STRING hMy_string)
+{
+	
+	My_string* pString = (My_string*)hMy_string;
+	if(pString == NULL)
+	{
+	return NULL;
+	}
+
+	My_string* pCopy = (My_string*)malloc(sizeof(My_string*));
+	if(pCopy == NULL)
+	{
+		return NULL;
+	}
+	pCopy->size = pString->size;
+	pCopy->capacity = pString->capacity;
+	char* temp = (char*)malloc(sizeof(char)* pString->capacity);
+	if(temp == NULL)
+	{
+		free(pCopy);
+		return NULL;
+	}
+	int i;
+	for(i = 0;i<pString->size;i++)
+	{
+		temp[i] = pString->data[i];
+	}
+	pCopy->data = temp;
+
+	return SUCCESS;
+
+}
 

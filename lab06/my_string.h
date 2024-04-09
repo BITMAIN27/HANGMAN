@@ -13,7 +13,7 @@ Status my_string_extraction(MY_STRING hMy_string, FILE* fp);//done
 
 Status my_string_insertion(MY_STRING hMy_string, FILE* fp);//done
 
-int my_string_get_size(MY_STRING hMy_string); //done
+int my_string_get_size(MY_STRING* hMy_string); //done
 
 int my_string_get_capacity(MY_STRING* hMy_string);//done
 
@@ -29,9 +29,14 @@ Status my_string_concat(MY_STRING hResult, MY_STRING hAppend);
 
 Boolean my_string_empty(MY_STRING hMy_string);
 
-int my_string_compare(MY_STRING hStringOne, MY_STRING hStringTwo);
 
 void my_string_print(MY_STRING hMy_string);
 
+
+Status my_string_assignment(MY_STRING hLeft, MY_STRING hRight);
+
+MY_STRING my_string_init_copy(MY_STRING hMy_string);
+
+void my_string_swap(MY_STRING hLeft, MY_STRING hRight);
 
 #endif

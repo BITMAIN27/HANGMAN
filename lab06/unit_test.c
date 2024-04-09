@@ -19,18 +19,18 @@ int main(int argc, char* argv[])
  test_my_string_extraction_return_SUCCESS,
  test_my_string_init_default,
 test_my_string_destroy,
-test_my_string_compare_return_negetive,
-test_my_string_compare_return_positive,
-test_my_string_compare_return_zero,
-test_my_string_concat_RETURN_SUCCESS,
-test_my_string_concat_RETURN_FAILURE,
-test_my_string_empty_TRUE,
-test_my_string_empty_FALSE,
-test_my_string_at_return_value,
-test_my_string_at_return_NULL,
-test_my_string_c_str_Terminating_SUCCESS,
-test_my_string_c_str_Terminating_FAILURE,
-test_my_string_get_size_return_Garbage
+test_my_string_extraction,
+test_my_string_insertion,
+test_my_string_get_size,
+test_my_string_get_capacity,
+test_my_string_push_back,
+test_my_string_pop_back,
+test_my_string_at,
+test_my_string_c_str,
+test_my_string_concat,
+test_my_string_empty,
+test_my_string_print,
+test_my_string_init_default_NULL
  };
 
 

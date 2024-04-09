@@ -163,9 +163,9 @@ Status test_my_string_insertion_return_SUCCESS(char* buffer, int length)
 	MY_STRING hString = NULL;
 	Status status;
 
-	FILE* fp;
+	//FILE* fp;
 	//fp = fopen("simple.txt", "r");
-	fp = stdout;
+	//fp = stdout;
 	hString = my_string_init_default();
 	my_string_push_back(hString, 'A');
 	if(my_string_insertion(hString,stdout) == FAILURE)
@@ -183,10 +183,7 @@ Status test_my_string_insertion_return_SUCCESS(char* buffer, int length)
 	}
 	my_string_destroy(&hString);
 	//fclose(fp);
-	if(status == SUCCESS)
-	{
-	printf("SUCCESS!!\n");
-	}
+	
 	return status;
 }
 
@@ -276,33 +273,405 @@ Status test_my_string_extraction_return_FAILURE(char* buffer, int length)
 
 
 
-Status test_my_string_init_default(char* buffer, int length){return SUCCESS;}
+Status test_my_string_init_default(char* buffer, int length) 
+{ 
 
-Status test_my_string_destroy(char* buffer, int length) {return SUCCESS;}
+	MY_STRING hString = NULL;
+	Status status;
 
-Status test_my_string_extraction(char* buffer, int length){return SUCCESS;}
+	hString = my_string_init_default();
 
-Status test_my_string_insertion(char* buffer, int length){return SUCCESS;}
+	if (hString == NULL)
+	{
+		status = FAILURE;
+		printf("Got back NULL\n");
+		strncpy(buffer, "test_my_string_init_default\n"
+			"Got back NULL\n", length);
+	}
+	else
+	{
+		status = SUCCESS;
+		strncpy(buffer, "test_my_string_init_default\n"
+			, length);
+	}
+	my_string_destroy(&hString);
+	return status;
+}
 
-Status test_my_string_get_size(char* buffer, int length){return SUCCESS;}
+Status test_my_string_destroy(char* buffer, int length) 
+{ 
 
-Status test_my_string_get_capacity(char* buffer, int length){return SUCCESS;}
+	MY_STRING hString = NULL;
+	Status status;
 
-Status test_my_string_push_back(char* buffer, int length){return SUCCESS;}
+	hString = my_string_init_default();
+	//printf("Memeory before destroy %p\n",hString);
+	my_string_destroy(&hString);
+	//printf("Memory after destroy %p\n",hString);
+	hString = NULL;
 
-Status test_my_string_pop_back(char* buffer, int length){return SUCCESS;}
+	if (hString != NULL)
+	{
+		//printf("%d",hString);
+		status = FAILURE;
+		printf("Failed to destory string object\n");
+		strncpy(buffer, "test_my_string_destroy\n"
+			"did not get NULL\n", length);
+	}
+	else
+	{
+		status = SUCCESS;
+		strncpy(buffer, "test_my_string_destroy\n"
+			, length);
+	}
+	return status;
+}
 
-Status test_my_string_at(char* buffer, int length){return SUCCESS;}
-
-Status test_my_string_c_str(char* buffer, int length){return SUCCESS;}
-
-Status test_my_string_concat(char* buffer, int length){return SUCCESS;}
-
-Status test_my_string_empty(char* buffer, int length){return SUCCESS;}
-
-Status test_my_string_print(char* buffer, int length){return SUCCESS;}
-
-Status test_my_string_init_default_NULL(char* buffer, int length){return SUCCESS;}
 
 
+Status test_my_string_compare_return_negetive(char* buffer, int length)
+{
+	MY_STRING hStringOne = NULL;
+	MY_STRING hStringTwo = NULL;
+	Status status;
 
+	hStringOne = my_string_init_default();
+	hStringTwo = my_string_init_default();
+
+	my_string_push_back(hStringOne, 'A');
+
+		if (my_string_compare(hStringOne,hStringTwo) != 1)
+		{
+			printf("got %d\n", my_string_compare(hStringOne, hStringTwo));
+			status = FAILURE;
+			printf("Expected 1\n");
+			strncpy(buffer, "test_my_string_compare_return_negetive\n"
+				"did not get 1\n", length);
+		}
+		else
+		{
+			status = SUCCESS;
+			strncpy(buffer, "test_my_string_compare_return_negetive\n"
+				, length);
+		}
+	my_string_destroy(&hStringOne);
+	my_string_destroy(&hStringTwo);
+	return status;
+}
+
+Status test_my_string_compare_return_positive(char* buffer, int length)
+{
+	MY_STRING hStringOne = NULL;
+	MY_STRING hStringTwo = NULL;
+	Status status;
+
+	hStringOne = my_string_init_default();
+	hStringTwo = my_string_init_default();
+
+	my_string_push_back(hStringTwo, 'A');
+
+	if (my_string_compare(hStringOne, hStringTwo) != -1)
+	{
+		printf("got %d\n", my_string_compare(hStringOne, hStringTwo));
+		status = FAILURE;
+		printf("Expected -1\n");
+		strncpy(buffer, "test_my_string_compare_return_positive\n"
+			"did not get -1\n", length);
+	}
+	else
+	{
+		status = SUCCESS;
+		strncpy(buffer, "test_my_string_compare_return_positive\n"
+			, length);
+	}
+	my_string_destroy(&hStringOne);
+	my_string_destroy(&hStringTwo);
+	return status;
+}
+
+Status test_my_string_compare_return_zero(char* buffer, int length)
+{
+	MY_STRING hStringOne = NULL;
+	MY_STRING hStringTwo = NULL;
+	Status status;
+
+	hStringOne = my_string_init_default();
+	hStringTwo = my_string_init_default();
+
+
+	my_string_push_back(hStringOne,'A');
+	my_string_push_back(hStringTwo,'A');
+
+//	int one = my_string_get_size(hStringOne);
+//	int two = my_string_get_size(hStringTwo);
+//	printf("Sizes %d %d\n",one,two);
+	if (my_string_compare(hStringOne, hStringTwo) != 0)
+	{
+		printf("got %d\n", my_string_compare(hStringOne, hStringTwo));
+		status = FAILURE;
+		printf("Expected 1\n");
+		strncpy(buffer, "test_my_string_compare_return_zero\n"
+			"did not get 0\n", length);
+	}
+	else
+	{
+		status = SUCCESS;
+		strncpy(buffer, "test_my_string_compare_return_zero\n"
+			, length);
+	}
+	my_string_destroy(&hStringOne);
+	my_string_destroy(&hStringTwo);
+	return status;
+}
+
+Status test_my_string_concat_RETURN_SUCCESS(char* buffer, int length) 
+{ 
+	MY_STRING hStringOne = NULL;
+	MY_STRING hStringTwo = NULL;
+	Status status;
+
+	hStringOne = my_string_init_default();
+	hStringTwo = my_string_init_default();
+
+	my_string_push_back(hStringOne,'A');
+	my_string_push_back(hStringTwo,'B');
+
+	if (my_string_concat(hStringOne, hStringTwo) == FAILURE)
+	{
+		status = FAILURE;
+		printf("Got back FAILURE expected SUCCESS\n");
+		strncpy(buffer, "test_my_string_concat_RETURN_SUCCESS\n"
+			"did not get SUCCESS\n", length);
+	}
+	else
+	{
+		status = SUCCESS;
+		strncpy(buffer, "test_my_string_concat_RETURN_SUCCESS\n"
+			, length);
+	}
+	my_string_destroy(&hStringOne);
+	my_string_destroy(&hStringTwo);
+	return status;
+}
+
+Status test_my_string_concat_RETURN_FAILURE(char* buffer, int length)
+{
+	MY_STRING hStringOne = NULL;
+	MY_STRING hStringTwo = NULL;
+	Status status;
+
+	hStringOne = my_string_init_default();
+	//hStringTwo = my_string_init_default();
+
+	my_string_push_back(hStringOne, 'A');
+	//my_string_push_back(hStringTwo, 'B');
+
+	if (my_string_concat(hStringOne, hStringTwo) != FAILURE)
+	{
+		status = FAILURE;
+		printf("Did not get back FAILURE\n");
+		strncpy(buffer, "test_my_string_concat_RETURN_FAILURE\n"
+			"did not get FAILURE\n", length);
+	}
+	else
+	{
+		status = SUCCESS;
+		strncpy(buffer, "test_my_string_concat_RETURN_FAILURE\n"
+			, length);
+	}
+	my_string_destroy(&hStringOne);
+	//my_string_destroy(&hStringTwo);
+	return status;
+
+}
+
+
+Status test_my_string_empty_TRUE(char* buffer, int length)
+{
+	MY_STRING hString = NULL;
+	hString = my_string_init_default();
+	Status status;
+
+	//my_string_push_back(hString,'A');
+	//printf("Value: -> %d\n",my_string_empty(hString));
+	if (my_string_empty(hString) != TRUE)
+	{
+		status = FAILURE;
+		printf("Did not get back TRUE\n");
+		strncpy(buffer, "test_my_string_empty_TRUE\n"
+			"did not get TRUE\n", length);
+	}
+	else
+	{
+		status = SUCCESS;
+		strncpy(buffer, "test_my_string_empty_TRUE\n"
+			, length);
+	}
+	my_string_destroy(&hString);
+	return status;
+}
+
+Status test_my_string_empty_FALSE(char* buffer, int length)
+{
+	MY_STRING hString = NULL;
+	hString = my_string_init_default();
+	Status status;
+
+	my_string_push_back(hString, 'A');
+
+	if (my_string_empty(hString) != FALSE)
+	{
+		status = FAILURE;
+		printf("Did not get back FALSE\n");
+		strncpy(buffer, "test_my_string_empty_FALSE\n"
+			"did not get FALSE\n", length);
+	}
+	else
+	{
+		status = SUCCESS;
+		strncpy(buffer, "test_my_string_empty_FALSE\n"
+			, length);
+	}
+	my_string_destroy(&hString);
+	return status;
+}
+
+Status test_my_string_at_return_value(char* buffer, int length) 
+{
+
+	MY_STRING hString = NULL;
+	hString = my_string_init_default();
+	Status status;
+
+	my_string_push_back(hString, 'A');
+
+	if (my_string_at(hString,0) == NULL)
+	{
+		status = FAILURE;
+		printf("Did not get back a vlue\n");
+		strncpy(buffer, "test_my_string_at_return_value\n"
+			"Got back NULL\n", length);
+	}
+	else
+	{
+		status = SUCCESS;
+		strncpy(buffer, "test_my_string_at_return_value\n"
+			, length);
+	}
+	my_string_destroy(&hString);
+	return status;
+}
+
+Status test_my_string_at_return_NULL(char* buffer, int length)
+{
+	MY_STRING hString = NULL;
+	hString = my_string_init_default();
+	Status status;
+
+	//my_string_push_back(hString, 'A');
+
+	if (my_string_at(hString, 1) != NULL)
+	{
+		status = FAILURE;
+		printf("Did not get back NULL\n");
+		strncpy(buffer, "test_my_string_at_return_NULL\n"
+			"did not get back NULL\n", length);
+	}
+	else
+	{
+		status = SUCCESS;
+		strncpy(buffer, "test_my_string_at_return_NULL\n"
+			, length);
+	}
+	my_string_destroy(&hString);
+	return status;
+}
+
+
+Status test_my_string_c_str_Terminating_SUCCESS(char* buffer, int length)
+{
+	MY_STRING hMy_string = NULL;
+	hMy_string = my_string_init_default();
+	Status status;
+
+	char* string = my_string_c_str(hMy_string);
+	
+	
+	int len = strlen(string);
+
+	if (len == NULL)
+	{
+		status = FAILURE;
+		printf("String is not NULL terminated\n");
+		strncpy(buffer, "test_my_string_c_str_Terminating_SUCCESS\n"
+			"Did not find the null terminator\n", length);
+	}
+	else
+	{
+		status = SUCCESS;
+		strncpy(buffer, "test_my_string_c_str_Terminating_SUCCESS\n"
+			, length);
+	}
+	my_string_destroy(&hMy_string);
+	return status;
+
+
+
+}
+
+Status test_my_string_c_str_Terminating_FAILURE(char* buffer, int length)
+{
+	MY_STRING hMy_string = NULL;
+	hMy_string = my_string_init_default();
+	Status status;
+
+	char* string = my_string_c_str(hMy_string);
+
+	int i;
+	for (i = 0; string[i] != '\0'; i++)
+	{
+		if (i >= my_string_get_size(hMy_string))
+		{
+			break;
+		}
+	}
+
+	if (string[i] == '\0')
+	{
+		status = FAILURE;
+		printf("String is NULL  terminated\n");
+		strncpy(buffer, "test_my_string_c_str_Terminating_FAILURE\n"
+			"Found the NULL terminator\n", length);
+	}
+	else
+	{
+		status = SUCCESS;
+		strncpy(buffer, "test_my_string_c_str_Terminating_FAILURE\n"
+			, length);
+	}
+	my_string_destroy(&hMy_string);
+	return status;
+}
+
+Status test_my_string_get_size_return_Garbage(char* buffer, int length) 
+{ 
+	MY_STRING hMy_string = NULL;
+	//hMy_string = my_string_init_default();
+	Status status;
+
+	if (my_string_get_size(hMy_string) != -1)
+	{
+		status = FAILURE;
+		printf("String has not size\n");
+		strncpy(buffer, "test_my_string_get_size\n"
+			"Size inccorect\n", length);
+	}
+	else
+	{
+		status = SUCCESS;
+		strncpy(buffer, "test_my_string_get_size\n"
+			, length);
+	}
+
+	return status;
+}

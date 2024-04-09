@@ -18,7 +18,7 @@ int main(int argc, char** argv)
 
 	while (my_string_extraction(hMy_string, fp))
 	{
-		if (my_string_get_size(hMy_string) == 5)
+		if (my_string_get_size(hMy_string) == 29)
 		{
 			my_string_insertion(hMy_string, stdout);
 			printf("\n");
