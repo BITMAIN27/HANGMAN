@@ -40,7 +40,35 @@ MY_STRING my_string_init_default()
 
 }
 
+MY_STRING init_c_string(char* string)
+{
+	My_string* pString = (My_string*)malloc(sizeof(My_string));
+	if(pString != NULL)
+	{
+		pString->size = strlen(string);
+		pString->capacity = pString->size * 2;
 
+		char* temp = (char*)malloc(sizeof(char)* pString->size);
+		if(temp == NULL)
+		{	
+			free(pString);
+			return NULL;
+		}
+
+		int i;//make deep copy of string
+
+		for(i = 0;i< pString->size;i++)
+		{
+			temp[i] = string[i];
+		}
+		pString->data = temp;
+
+
+	}
+	return pString;
+	
+
+}
 
 Status my_string_extraction(MY_STRING hMy_string, FILE* fp)
 {
@@ -136,7 +164,7 @@ Status my_string_insertion(MY_STRING hMy_string, FILE* fp)
 	{
 		return FAILURE;
 	}
-	//fprintf(fp,"%s",pMy_string->data);
+	fprintf(fp,"%s\n",pMy_string->data);
 	return SUCCESS;
 	
 }
@@ -328,12 +356,14 @@ MY_STRING my_string_init_copy(MY_STRING hMy_string)
 	My_string* pString = (My_string*)hMy_string;
 	if(pString == NULL)
 	{
+	printf("Provided handle was NULL\n");
 	return NULL;
 	}
 
-	My_string* pCopy = (My_string*)malloc(sizeof(My_string*));
+	My_string* pCopy = (My_string*)malloc(sizeof(My_string));
 	if(pCopy == NULL)
 	{
+		printf("Memory allocation failed\n");
 		return NULL;
 	}
 	pCopy->size = pString->size;
@@ -341,6 +371,7 @@ MY_STRING my_string_init_copy(MY_STRING hMy_string)
 	char* temp = (char*)malloc(sizeof(char)* pString->capacity);
 	if(temp == NULL)
 	{
+		printf("data array memeory allocation failed\n");
 		free(pCopy);
 		return NULL;
 	}
@@ -351,7 +382,32 @@ MY_STRING my_string_init_copy(MY_STRING hMy_string)
 	}
 	pCopy->data = temp;
 
-	return SUCCESS;
+	return pCopy;
 
+}
+
+void my_string_swap(MY_STRING hLeft, MY_STRING hRight)
+{
+	My_string* pLeft = (My_string*)hLeft;
+	My_string* pRight = (My_string*)hRight;
+	
+	if(pLeft == NULL || pRight == NULL)
+	{
+		printf("Cannot swap\n");
+	}
+	else{
+	//swap size
+	int temp = pLeft->size;
+	pLeft->size = pRight->size;
+	pRight->size = temp;
+	//swap capacity
+	temp = pLeft->capacity;
+	pLeft->capacity = pRight->capacity;
+	pRight->capacity = temp;
+	//swap data pointers
+	char* pTemp = pLeft->data;
+	pLeft->data = pRight->data;
+	pRight->data = pTemp;
+	}
 }
 

@@ -2,70 +2,57 @@
 #include <stdlib.h>
 #include "my_string.h"
 
+#define SIZE 99
+
 int main(int argc,char* argv[])
 {
-
-	MY_STRING hMy_string = NULL;
-	MY_STRING hAppend = NULL;
-	MY_STRING hTest = NULL;
-	hTest = my_string_init_default();
-	hAppend = my_string_init_default();
- 	hMy_string = my_string_init_default();
 	
+	int i;
+    printf("INIT BEGIN\n");
+    MY_STRING* items = malloc(sizeof(MY_STRING) * SIZE);
+    for (i = 0; i < SIZE; i++) {
+        items[i] = NULL;
+    }
+    printf("INIT COMPLETE\n");
 
-my_string_push_back(hAppend,'H');
-my_string_push_back(hAppend,'E');
-my_string_push_back(hAppend,'L');
-my_string_push_back(hAppend,'L');
-my_string_push_back(hAppend,'O');
-
+    items[0] = init_c_string("COPY ME!");
 	
-
-
-	my_string_push_back(hMy_string,'A');
-
-	my_string_print(hMy_string);
-
-	my_string_push_back(hMy_string,'B');
-
-	my_string_print(hMy_string);
-
-	my_string_push_back(hMy_string,'C');
-
-	my_string_print(hMy_string);
-
-
-	my_string_pop_back(hMy_string);
-
-	my_string_print(hMy_string);
-
-
-
-	printf("Address of index provided is: %p\n",my_string_at(hMy_string,1));
-
-	printf("Address of null terminated string is: %p\n",my_string_c_str(hMy_string));
-
-	printf("hResult before:"); my_string_print(hMy_string);
-	my_string_concat(hMy_string,hAppend);
-	printf("hResult after:"); my_string_print(hMy_string);
-	
-	printf("\n");
-
-	if(my_string_empty(hTest) == TRUE)
+	printf("INIT COPY\n");
+	for(i = 1; i < SIZE ;i++)
 	{
-		printf("String is empty\n");
+		items[i] = my_string_init_copy(items[0]);
 	}
-	else
+	printf("COPY COMPLETE\n");
+	
+	my_string_destroy(&items[0]);
+	items[0] = init_c_string("FIRST FIFTY");
+
+	printf("INIT ASSIGNMENT\n");
+	for(i = 1; i<SIZE/2;i++)
 	{
-		printf("string is NOT empty\n");
+		my_string_assignment(items[i],items[0]);
+	}
+	printf("ASSIGMENT COMPLETE\n");
+
+	printf("SWAP INIT\n");
+	for(i = 0;i< SIZE/2 ;i++)
+	{
+		my_string_swap(items[i],items[SIZE - i- 1]);
+	
+	}
+	printf("SWAP COMPLETE\n");
+	
+
+	for(i = 0;i< SIZE;i++)
+	{
+		my_string_insertion(items[i],stdout);
 	}
 	
-	my_string_destroy(&hTest);
-	my_string_destroy(&hAppend);
- 	my_string_destroy(&hMy_string);
- 	
-
-
+	for(i = 0;i<SIZE;i++)
+	{
+		my_string_destroy(items+i);
+	}
+	free(items);
 
  	return 0;
 

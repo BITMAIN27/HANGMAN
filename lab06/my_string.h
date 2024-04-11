@@ -7,6 +7,10 @@ typedef void* MY_STRING;
 
 MY_STRING my_string_init_default();
 
+
+MY_STRING init_c_string(char* string);
+
+
 void my_string_destroy(MY_STRING* hMy_string);
 
 Status my_string_extraction(MY_STRING hMy_string, FILE* fp);//done
